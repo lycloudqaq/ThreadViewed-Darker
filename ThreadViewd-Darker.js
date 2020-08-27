@@ -24,12 +24,12 @@
 (function () {
     var host = window.location.host;
     switch (host) {
-        case "moecat.best":
-            doubleTrFilter(); break;
+        // case "moecat.best":
+        //     doubleTrFilter(); break;
         case "share.dmhy.org":
             dmhyFilter(); break;
         case "www.pthome.net":
-            singleTrFilterPthome();break
+            singleTrFilterPthome(); break;
         default:
             singleTrFilter(); break;
     }
@@ -65,7 +65,7 @@
             readTr[i].addEventListener('mousedown', function () {
                 var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
                 if (readTrIdArray.includes(readTrId) == false) {
-                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
                     this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
                     readTrIdArray.push(readTrId);
                     if (readTrIdArray.length > 100) { readTrIdArray.shift() };
@@ -115,7 +115,7 @@
         var readTrIdArray = [];
         readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
         var readTr = document.querySelectorAll("tr>.title>a");
-        for (var i = 0; i < readTr.length; i++) {
+        for (i = 0; i < readTr.length; i++) {
             readTr[i].addEventListener('mousedown', function () {
                 var readTrId = Number(((/(?<=view\/)\d+/).exec(this.href)).toString());
                 if (readTrIdArray.includes(readTrId) == false) {
