@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PtReadFilter
 // @namespace    https://github.com/lycloudqaq/ThreadViewed-Darker
-// @version      1.2
+// @version      1.3
 // @description  加深点击后的条目
 // @author       lycloud
 // @match        *://share.dmhy.org/*
@@ -24,84 +24,13 @@
 (function () {
     var host = window.location.host;
     switch (host) {
-        // case "moecat.best":
-        //     doubleTrFilter(); break;
         case "share.dmhy.org":
             dmhyFilter(); break;
         case "www.pthome.net":
-            singleTrFilterPthome(); break;
+            ptTrFilter4Pthome(); break;
         default:
-            singleTrFilter(); break;
+            ptTrFilter(); break;
     }
-
-    function singleTrFilter() {
-        var readTrIdArray = [];
-        readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
-        var readTr = document.querySelectorAll("table.torrents>tbody>tr table.torrentname>tbody>tr>td>a");
-        for (var i = 0; i < readTr.length; i++) {
-            readTr[i].addEventListener('mousedown', function () {
-                var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
-                if (readTrIdArray.includes(readTrId) == false) {
-                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                    this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                    readTrIdArray.push(readTrId);
-                    if (readTrIdArray.length > 100) { readTrIdArray.shift() };
-                    localStorage.setItem('read', JSON.stringify(readTrIdArray));
-                }
-            })
-            var readTrId = Number(((/(?<=\?id=)\d+/).exec(readTr[i].href)).toString());
-            if (readTrIdArray.includes(readTrId) == true) {
-                readTr[i].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-            }
-        }
-    }
-
-    function singleTrFilterPthome() {
-        var readTrIdArray = [];
-        readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
-        var readTr = document.querySelectorAll("table.torrents>tbody>tr table.torrentname>tbody>tr>td>a");
-        for (var i = 0; i < readTr.length; i++) {
-            readTr[i].addEventListener('mousedown', function () {
-                var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
-                if (readTrIdArray.includes(readTrId) == false) {
-                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                    this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                    readTrIdArray.push(readTrId);
-                    if (readTrIdArray.length > 100) { readTrIdArray.shift() };
-                    localStorage.setItem('read', JSON.stringify(readTrIdArray));
-                }
-            })
-            var readTrId = Number(((/(?<=\?id=)\d+/).exec(readTr[i].href)).toString());
-            if (readTrIdArray.includes(readTrId) == true) {
-                readTr[i].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-                readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-            }
-        }
-    }
-
-    // function doubleTrFilter() {
-    //     var readTrIdArray = [];
-    //     readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
-    //     var readTr = document.querySelectorAll("table.torrents>tbody>tr>td>table>tbody>tr>td>a");
-    //     for (i = 0; i < readTr.length; i++) {
-    //         readTr[i].addEventListener('mousedown', function () {
-    //             var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
-    //             if (readTrIdArray.includes(readTrId) == false) {
-    //                 this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-    //                 this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-    //                 readTrIdArray.push(readTrId);
-    //                 if (readTrIdArray.length > 100) { readTrIdArray.shift() };
-    //                 localStorage.setItem('read', JSON.stringify(readTrIdArray));
-    //             }
-    //         })
-    //         var readTrId = Number(((/(?<=\?id=)\d+/).exec(readTr[i].href)).toString());
-    //         if (readTrIdArray.includes(readTrId) == true) {
-    //             readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-    //             readTr[i].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
-    //         }
-    //     }
-    // }
 
     function dmhyFilter() {
         var filterTr = document.querySelectorAll("table#topic_list>tbody>tr.even");
@@ -128,6 +57,52 @@
             var readTrId = Number(((/(?<=view\/)\d+/).exec(readTr[i].href)).toString());
             if (readTrIdArray.includes(readTrId) == true) {
                 readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#ccc;");
+            }
+        }
+    }
+
+    function ptTrFilter() {
+        var readTrIdArray = [];
+        readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
+        var readTr = document.querySelectorAll("table.torrents>tbody>tr table.torrentname>tbody>tr>td>a");
+        for (var i = 0; i < readTr.length; i++) {
+            readTr[i].addEventListener('mousedown', function () {
+                var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
+                if (readTrIdArray.includes(readTrId) == false) {
+                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                    this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                    readTrIdArray.push(readTrId);
+                    if (readTrIdArray.length > 100) { readTrIdArray.shift() };
+                    localStorage.setItem('read', JSON.stringify(readTrIdArray));
+                }
+            })
+            var readTrId = Number(((/(?<=\?id=)\d+/).exec(readTr[i].href)).toString());
+            if (readTrIdArray.includes(readTrId) == true) {
+                readTr[i].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+            }
+        }
+    }
+
+    function ptTrFilter4Pthome() {
+        var readTrIdArray = [];
+        readTrIdArray = readTrIdArray.concat(JSON.parse(localStorage.getItem('read')));
+        var readTr = document.querySelectorAll("table.torrents>tbody>tr table.torrentname>tbody>tr>td>a");
+        for (var i = 0; i < readTr.length; i++) {
+            readTr[i].addEventListener('mousedown', function () {
+                var readTrId = Number(((/(?<=\?id=)\d+/).exec(this.href)).toString());
+                if (readTrIdArray.includes(readTrId) == false) {
+                    this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                    this.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                    readTrIdArray.push(readTrId);
+                    if (readTrIdArray.length > 100) { readTrIdArray.shift() };
+                    localStorage.setItem('read', JSON.stringify(readTrIdArray));
+                }
+            })
+            var readTrId = Number(((/(?<=\?id=)\d+/).exec(readTr[i].href)).toString());
+            if (readTrIdArray.includes(readTrId) == true) {
+                readTr[i].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.setAttribute("style", "background-color:#909090;");
+                readTr[i].parentNode.parentNode.setAttribute("style", "background-color:#909090;");
             }
         }
     }
